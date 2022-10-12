@@ -1,34 +1,20 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import React from 'react'
 import './App.css'
 
+
+const title = 'React';
+
+/* remove boilerplate code and reduce the component to a lightweight version.
+App is basically a JavaScript function aka a functional component. defined in PascalCase. */
 function App() {
-  const [count, setCount] = useState(0)
+  /* here, can have implementation details */
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    /* whatever is returned here resembles HTML but it is JSX code, the syntax that allows to combine JS and HTML */
+    <div>
+      <h1>Hello React</h1>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
