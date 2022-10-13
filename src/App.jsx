@@ -42,29 +42,45 @@ function App() {
     <div>
       <h1>{welcome.greeting} {getTitle('React')}</h1>
 
-      {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
-      Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+      <Search />
 
       <hr />
 
-      <ul>
-        {list.map(function (item) {
-          return (
+      <List />
+    </div>
+  );
+}
+
+{/* new List components created to encapsulate functionalities */}
+
+function List() {
+  return (
+    <ul>
+      {list.map(function (item) {
+        return (
           <li key={item.objectID}>
             <span>
-              <a href= {item.url}>{item.title}</a>
+              <a href={item.url}>{item.title}</a>
             </span>
             <span>{item.author}</span>
             <span>{item.num_comments}</span>
             <span>{item.points}</span>
           </li>
-        )})}
-      </ul>
-
-    </div>
+        )
+      })}
+    </ul>
   );
 }
+
+function Search() {
+  return(
+    <div>
+      {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
+      Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" />
+    </div>
+  );
+};
 
 export default App;
