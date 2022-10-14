@@ -1,28 +1,6 @@
 import * as React from 'react';
 import './App.css';
 
-// create list here
-const list = [
-  {
-    title: 'react',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    
-    points: 5,
-    objectID: 1,
-  },
-];
-
-
 const welcome = {
 greeting: "Hey",
 };
@@ -53,6 +31,10 @@ const App = () => {
       objectID: 1,
     },
   ];
+  {/* here, we are introducing a callback handler to pass information up the component tree*/}
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+  }
   return (
     /* whatever is returned here resembles HTML but it is JSX code, the syntax that allows to combine JS and HTML. 
     While HTML can be used almost (except for the attribute) in its native way in JSX, everything in curly braces can be used to interpolate JS. */
@@ -60,7 +42,7 @@ const App = () => {
     <div>
       <h1>{welcome.greeting} {getTitle('React')}</h1>
 
-      <Search />
+      <Search onSearch={handleSearch}/>
 
       <hr />
 
@@ -70,12 +52,20 @@ const App = () => {
 };
 
 {/* Search component for label and input */}  
-const Search = () => {
+const Search = (props) => {
+  {/* searchTerm represents the current state. setSearchTerm is a function to update this state.*/}
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+
   const handleChange = (event) => {
-    // synthetic event
-    console.log(event);
-    // value of target (here: input HTML element)
-    console.log(event.target.value);
+    setSearchTerm(event.target.value);
+    // console.log('Search-renders');
+    // // synthetic event
+    // console.log(event);
+    // // value of target (here: input HTML element)
+    // console.log(event.target.value);
+
+    props.onSearch(event);
   };
 
   return (
@@ -84,6 +74,7 @@ const Search = () => {
       Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
       <label htmlFor="search">Search: </label>
       <input id="search" type="text" onChange={handleChange} /> {/*always pass functions to these handlers, not the return value of the function, except when the return value is a function again.*/}
+      <p>Searching for <strong>{searchTerm}</strong>.</p>
     </div>
   );
 };
@@ -91,7 +82,7 @@ const Search = () => {
 export default App;
 
 
-{/* new List components created to encapsulate functionalities */}
+{/* new List component created to encapsulate functionalities */}
 
 const List = (props) => (
   <ul>
