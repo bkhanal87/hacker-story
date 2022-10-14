@@ -16,6 +16,7 @@ const list = [
     url: 'https://redux.js.org/',
     author: 'Dan Abramov, Andrew Clark',
     num_comments: 2,
+    
     points: 5,
     objectID: 1,
   },
@@ -32,55 +33,52 @@ return title;
 
 /* remove boilerplate code and reduce the component to a lightweight version.
 App is basically a JavaScript function aka a functional component. defined in PascalCase. */
-function App() {
-  /* here, can have implementation details */
+const App = () =>
+/* here, can have implementation details */
 
-  return (
-    /* whatever is returned here resembles HTML but it is JSX code, the syntax that allows to combine JS and HTML. 
-    While HTML can be used almost (except for the attribute) in its native way in JSX, everything in curly braces can be used to interpolate JS. */
+(
+  /* whatever is returned here resembles HTML but it is JSX code, the syntax that allows to combine JS and HTML. 
+  While HTML can be used almost (except for the attribute) in its native way in JSX, everything in curly braces can be used to interpolate JS. */
 
-    <div>
-      <h1>{welcome.greeting} {getTitle('React')}</h1>
+  <div>
+    <h1>{welcome.greeting} {getTitle('React')}</h1>
 
-      <Search />
+    <Search />
 
-      <hr />
+    <hr />
 
-      <List />
-    </div>
-  );
-}
+    <List />
+  </div>
+);
+
+{/* Search component for label and input */}  
+const Search = () => (
+  <div>
+    {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
+      Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
+    <label htmlFor="search">Search: </label>
+    <input id="search" type="text" />
+  </div>
+);
+
+export default App;
+
 
 {/* new List components created to encapsulate functionalities */}
 
-function List() {
-  return (
-    <ul>
-      {list.map(function (item) {
-        return (
-          <li key={item.objectID}>
-            <span>
-              <a href={item.url}>{item.title}</a>
-            </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
-          </li>
-        )
-      })}
-    </ul>
-  );
-}
+const List = () => (
+  <ul>
+    {list.map((item) => (
+      <li key={item.objectID}>
+        <span>
+          <a href={item.url}>{item.title}</a>
+        </span>
+        <span>{item.author}</span>
+        <span>{item.num_comments}</span>
+        <span>{item.points}</span>
+      </li>
+    ))}
+  </ul>
+);
 
-function Search() {
-  return(
-    <div>
-      {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
-      Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
-    </div>
-  );
-};
 
-export default App;
