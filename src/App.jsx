@@ -52,14 +52,23 @@ const App = () =>
 );
 
 {/* Search component for label and input */}  
-const Search = () => (
-  <div>
-    {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
+const Search = () => {
+  const handleChange = (event) => {
+    // synthetic event
+    console.log(event);
+    // value of target (here: input HTML element)
+    console.log(event.target.value);
+  };
+
+  return (
+    <div>
+      {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
       Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
-    <label htmlFor="search">Search: </label>
-    <input id="search" type="text" />
-  </div>
-);
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" onChange={handleChange} /> {/*always pass functions to these handlers, not the return value of the function, except when the return value is a function again.*/}
+    </div>
+  );
+};
 
 export default App;
 
