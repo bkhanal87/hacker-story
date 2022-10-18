@@ -1,18 +1,13 @@
 import * as React from 'react';
-import './App.css';
-
-const welcome = {
-greeting: "Hey",
-};
 
 function getTitle(title) {
-return title;
+  return title;
 }
 
-/* remove boilerplate code and reduce the component to a lightweight version.
-App is basically a JavaScript function aka a functional component. defined in PascalCase. */
+
+// const title = 'React';
+
 const App = () => {
-  /* here, can have implementation details */
   const stories = [
     {
       title: 'React',
@@ -30,69 +25,71 @@ const App = () => {
       points: 5,
       objectID: 1,
     },
+  
   ];
-  {/* here, we are introducing a callback handler to pass information up the component tree*/}
-  const handleSearch = (event) => {
-    console.log(event.target.value);
-  }
+
+
   return (
-    /* whatever is returned here resembles HTML but it is JSX code, the syntax that allows to combine JS and HTML. 
-    While HTML can be used almost (except for the attribute) in its native way in JSX, everything in curly braces can be used to interpolate JS. */
-
     <div>
-      <h1>{welcome.greeting} {getTitle('React')}</h1>
-
-      <Search onSearch={handleSearch}/>
-
+      <h1>
+        My Hacker Stories
+      </h1>
+      <Search />
+      
       <hr />
 
-      <List list={stories} />
+      <List list={stories}/>
+
+      
     </div>
+  );
+}
+
+const List = (props) => {
+  return (
+    <ul>
+      {props.list.map((item) =>
+        <Item key={item.objectID} item={item} />
+      )}
+    </ul>
   );
 };
 
-{/* Search component for label and input */}  
-const Search = (props) => {
-  {/* searchTerm represents the current state. setSearchTerm is a function to update this state.*/}
-  const [searchTerm, setSearchTerm] = React.useState('');
+const Search = () => {
+  // perform a task in between
+  // let searchTerm = '';
+  const[searchTerm, setSearchTerm] = React.useState('');
 
-
+  // event handler
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    // console.log('Search-renders');
-    // // synthetic event
+    // synthetic event
     // console.log(event);
-    // // value of target (here: input HTML element)
+    // value of target (here: Input HTML element)
     // console.log(event.target.value);
+    setSearchTerm (event.target.value);
+  }
 
-    props.onSearch(event);
-  };
 
   return (
     <div>
-      {/* htmlFor reflects the 'for' attribute in vanilla HTML. 
-      Since JSX is closer to JS than to HTML, React uses the camelCase naming convention */}
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} /> {/*always pass functions to these handlers, not the return value of the function, except when the return value is a function again.*/}
-      <p>Searching for <strong>{searchTerm}</strong>.</p>
+      <label
+        htmlFor="search">
+        Search:
+      </label>
+      <input
+        id="search"
+        type="text"
+        onChange={handleChange}
+      />
+      <p>
+        Searching for <strong>{searchTerm}</strong>
+      </p>
     </div>
+    
   );
 };
 
-export default App;
-
-
-{/* new List component created to encapsulate functionalities */}
-
-const List = (props) => (
-  <ul>
-    {props.list.map((item) => (
-      <Item key={item.objectID} item={item}/>
-    ))}
-  </ul>
-);
-
-const Item = (props) => (
+const Item = (props) (
   <li>
     <span>
       <a href={props.item.url}>{props.item.title}</a>
@@ -103,3 +100,4 @@ const Item = (props) => (
   </li>
 );
 
+export default App;
