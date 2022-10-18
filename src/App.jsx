@@ -28,49 +28,68 @@ const App = () => {
   
   ];
 
+  const[searchTerm, setSearchTerm] = React.useState('React');
+
+  
+  // callback handler in JSX - step A
+  const handleSearch = (event) => {
+
+    // D
+    setSearchTerm(event.target.value);
+  }
+
+  const searchedStories = stories.filter((story) =>
+    story.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   return (
     <div>
       <h1>
         My Hacker Stories
       </h1>
-      <Search />
+
+      {/* B */}
+      <Search  search={searchTerm} onSearch={handleSearch} />
       
       <hr />
 
-      <List list={stories}/>
+      <List list={searchedStories}/>
 
       
     </div>
   );
-}
-
-const List = (props) => {
-  return (
-    <ul>
-      {props.list.map((item) =>
-        <Item key={item.objectID} item={item} />
-      )}
-    </ul>
-  );
 };
 
-const Search = () => {
-  // perform a task in between
-  // let searchTerm = '';
-  const[searchTerm, setSearchTerm] = React.useState('');
+const List = (props) => (
+  <ul>
+    {props.list.map((item) =>
+      <Item key={item.objectID} item={item} />
+    )}
+  </ul>
+);
 
-  // event handler
-  const handleChange = (event) => {
-    // synthetic event
-    // console.log(event);
-    // value of target (here: Input HTML element)
-    // console.log(event.target.value);
-    setSearchTerm (event.target.value);
-  }
+const Search = (props) => (
+// {
+//   // perform a task in between
+//   // let searchTerm = '';
+
+//   // event handler
+//   const handleChange = (event) => {
+//     // synthetic event
+//     // console.log(event);
+//     // value of target (here: Input HTML element)
+//     // console.log(event.target.value);
+//     setSearchTerm (event.target.value);
+//     // searchTerm = event.target.value;
+
+//     // C
+//     props.onSearch(event);
+//   }
 
 
-  return (
+//   return 
+
     <div>
       <label
         htmlFor="search">
@@ -79,17 +98,18 @@ const Search = () => {
       <input
         id="search"
         type="text"
-        onChange={handleChange}
+        value={props.search}
+        onChange={props.onSearch}
       />
-      <p>
+      {/* <p>
         Searching for <strong>{searchTerm}</strong>
-      </p>
+      </p> */}
     </div>
     
   );
-};
+// };
 
-const Item = (props) (
+const Item = (props) => (
   <li>
     <span>
       <a href={props.item.url}>{props.item.title}</a>
