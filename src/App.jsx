@@ -1,11 +1,34 @@
 import * as React from 'react';
 
-function getTitle(title) {
-  return title;
-}
+// function getTitle(title) {
+//   return title;
+// }
 
 
 // const title = 'React';
+
+// const[searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') || 'React');
+
+const useStorageState = (key, initialState) => {
+  const[value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState // key added here to prevent overwrite of the "value"-allocated item in the local storage
+);
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
+// const[searchTerm, setSearchTerm] = useStorageState('React'); // creating a custom hook to keep the component's state in sync with the browser's local storage.
+
+  
+
+// React's useEffect Hook to trigger the desired side-effect each time the searchTerm changes
+// React.useEffect(() => {
+//   localStorage.setItem('search', 'searchTerm');
+// }, [searchTerm]);
 
 const App = () => {
   const stories = [
@@ -28,23 +51,16 @@ const App = () => {
   
   ];
 
-  const[searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') || 'React');
-
-  // React's useEffect Hook to trigger the desired side-effect each time the searchTerm changes
-  React.useEffect(() => {
-    localStorage.setItem('search', 'searchTerm');
-  }, [searchTerm]);
-
   // callback handler in JSX - step A
+  const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
+
+  
   const handleSearch = (event) => {
 
     // D
     setSearchTerm(event.target.value);
-
-    // using the local storage to store the searchTerm
-
-  localStorage.setItem('search', event.target.value);
   };
+
 
   const searchedStories = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -68,16 +84,6 @@ const App = () => {
     </div>
   );
 };
-
-const List = ({ list }) => (
-  <ul>
-    {list.map((item) =>
-      <Item 
-      key={item.objectID} 
-      item={item} />
-    )}
-  </ul>
-);
 
 const Search = ({search, onSearch}) => 
 
@@ -118,6 +124,15 @@ const Search = ({search, onSearch}) =>
   </div>
 );
 
+const List = ({ list }) => (
+  <ul>
+    {list.map((item) =>
+      <Item 
+      key={item.objectID} 
+      item={item} />
+    )}
+  </ul>
+);
 
 const Item = ({item}) => (
   <li>
