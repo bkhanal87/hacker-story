@@ -28,15 +28,23 @@ const App = () => {
   
   ];
 
-  const[searchTerm, setSearchTerm] = React.useState('React');
+  const[searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') || 'React');
 
-  
+  // React's useEffect Hook to trigger the desired side-effect each time the searchTerm changes
+  React.useEffect(() => {
+    localStorage.setItem('search', 'searchTerm');
+  }, [searchTerm]);
+
   // callback handler in JSX - step A
   const handleSearch = (event) => {
 
     // D
     setSearchTerm(event.target.value);
-  }
+
+    // using the local storage to store the searchTerm
+
+  localStorage.setItem('search', event.target.value);
+  };
 
   const searchedStories = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -61,15 +69,19 @@ const App = () => {
   );
 };
 
-const List = (props) => (
+const List = ({ list }) => (
   <ul>
-    {props.list.map((item) =>
-      <Item key={item.objectID} item={item} />
+    {list.map((item) =>
+      <Item 
+      key={item.objectID} 
+      item={item} />
     )}
   </ul>
 );
 
-const Search = (props) => (
+const Search = ({search, onSearch}) => 
+
+// (
 // {
 //   // perform a task in between
 //   // let searchTerm = '';
@@ -88,35 +100,33 @@ const Search = (props) => (
 //   }
 
 
-//   return 
-
-    <div>
-      <label
-        htmlFor="search">
-        Search:
-      </label>
-      <input
-        id="search"
-        type="text"
-        value={props.search}
-        onChange={props.onSearch}
-      />
-      {/* <p>
+(
+  <div>
+    <label
+      htmlFor="search">
+      Search:
+    </label>
+    <input
+      id="search"
+      type="text"
+      value={search}
+      onChange={onSearch}
+    />
+    {/* <p>
         Searching for <strong>{searchTerm}</strong>
       </p> */}
-    </div>
-    
-  );
-// };
+  </div>
+);
 
-const Item = (props) => (
+
+const Item = ({item}) => (
   <li>
     <span>
-      <a href={props.item.url}>{props.item.title}</a>
+      <a href={item.url}>{item.title}</a>
     </span>
-    <span>{props.item.author}</span>
-    <span>{props.item.num_comments}</span>
-    <span>{props.item.points}</span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
   </li>
 );
 
