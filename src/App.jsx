@@ -85,29 +85,9 @@ const App = () => {
   );
 };
 
-const Search = ({search, onSearch}) => 
-
-// (
-// {
-//   // perform a task in between
-//   // let searchTerm = '';
-
-//   // event handler
-//   const handleChange = (event) => {
-//     // synthetic event
-//     // console.log(event);
-//     // value of target (here: Input HTML element)
-//     // console.log(event.target.value);
-//     setSearchTerm (event.target.value);
-//     // searchTerm = event.target.value;
-
-//     // C
-//     props.onSearch(event);
-//   }
-
-
+const Search = ({ search, onSearch }) =>
 (
-  <div>
+  <>
     <label
       htmlFor="search">
       Search:
@@ -118,10 +98,7 @@ const Search = ({search, onSearch}) =>
       value={search}
       onChange={onSearch}
     />
-    {/* <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p> */}
-  </div>
+  </>
 );
 
 const List = ({ list }) => (
