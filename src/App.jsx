@@ -1,14 +1,5 @@
 import * as React from 'react';
 
-// function getTitle(title) {
-//   return title;
-// }
-
-
-// const title = 'React';
-
-// const[searchTerm, setSearchTerm] = React.useState(localStorage.getItem('search') || 'React');
-
 const useStorageState = (key, initialState) => {
   const[value, setValue] = React.useState(
     localStorage.getItem(key) || initialState // key added here to prevent overwrite of the "value"-allocated item in the local storage
@@ -20,15 +11,6 @@ const useStorageState = (key, initialState) => {
 
   return [value, setValue];
 };
-
-// const[searchTerm, setSearchTerm] = useStorageState('React'); // creating a custom hook to keep the component's state in sync with the browser's local storage.
-
-  
-
-// React's useEffect Hook to trigger the desired side-effect each time the searchTerm changes
-// React.useEffect(() => {
-//   localStorage.setItem('search', 'searchTerm');
-// }, [searchTerm]);
 
 const App = () => {
   const stories = [
@@ -73,30 +55,41 @@ const App = () => {
         My Hacker Stories
       </h1>
 
-      {/* B */}
+      <InputWithLabel 
+        id="search"
+        // label="search"
+        value={searchTerm}
+        onInputChange={handleSearch}
+      >
+      <strong>Search:</strong>
+      </InputWithLabel>
+      {/* B
       <Search  search={searchTerm} onSearch={handleSearch} />
       
       <hr />
 
       <List list={searchedStories}/>
 
-      
+       */}
     </div>
   );
 };
 
-const Search = ({ search, onSearch }) =>
-(
+const InputWithLabel = ({
+  id,
+  value,
+  type = 'text',
+  onInputChange,
+  children,
+}) => (
   <>
-    <label
-      htmlFor="search">
-      Search:
-    </label>
+    <label htmlFor={id}>{children}</label>
+    &nbsp;
     <input
-      id="search"
-      type="text"
-      value={search}
-      onChange={onSearch}
+      id={id}
+      type={type}
+      value={value}
+      onChange={onInputChange}
     />
   </>
 );
