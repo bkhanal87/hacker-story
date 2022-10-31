@@ -47,10 +47,16 @@ const App = () => {
 
   const [stories, setStories] = React.useState([]);
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   {/* new useEffect hook that calls the getAsyncStories function and resolves the returned promise as a side-effect*/}
   React.useEffect(() => {
+    setIsLoading(true);
+
     getAsyncStories().then(result => {
-      setStories(result.data.stories)
+      setStories(result.data.stories);
+      setIsLoading(false);
+    
     });
   }, []);
 
@@ -89,13 +95,19 @@ const App = () => {
       >
       <strong>Search:</strong>
       </InputWithLabel>
+
       {/* B
-      <Search  search={searchTerm} onSearch={handleSearch} /> */}
-      
+      <Search  search={searchTerm} onSearch={handleSearch} />  */}
+
       <hr />
 
-      <List list={searchedStories} onRemoveItem = {handleRemoveStory} />
-
+      {isLoading ? (
+        <p>Loading....</p>
+      ) : (
+      <List list={searchedStories} 
+      onRemoveItem={handleRemoveStory} 
+      />
+      )}
     </div>
   );
 };
