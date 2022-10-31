@@ -32,12 +32,27 @@ const initialStories = [
 
 ];
 
+const getAsyncStories = () =>
+  new Promise((resolve) =>
+    setTimeout(
+      () => resolve({ data: { stories: initialStories } }),
+      2000
+    )
+  );
+
 const App = () => {
   
   // callback handler in JSX - step A
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
 
-  const [stories, setStories] = React.useState(initialStories);
+  const [stories, setStories] = React.useState([]);
+
+  {/* new useEffect hook that calls the getAsyncStories function and resolves the returned promise as a side-effect*/}
+  React.useEffect(() => {
+    getAsyncStories().then(result => {
+      setStories(result.data.stories)
+    });
+  }, []);
 
   const handleRemoveStory = (item) => {
     const newStories = stories.filter(
